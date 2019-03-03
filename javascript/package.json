@@ -1,0 +1,21 @@
+{
+  "name": "keepa_api",
+  "version": "1.0.0",
+  "description": "The_Keepa_API_offers_numerous_endpoints___Every_request_requires_your_API_access_key_as_a_parameter__You_can_find_and_change_your_key_in_the_keepa_portal__All_requests_must_be_issued_as_a_HTTPS_GET_and_accept_gzip_encoding__If_possible_use_a_Keep_Alive_connection___Multiple_requests_can_be_made_in_parallel_to_increase_throughput_",
+  "license": "Unlicense",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha --recursive"
+  },
+  "browser": {
+    "fs": false
+  },
+  "dependencies": {
+    "superagent": "3.7.0"
+  },
+  "devDependencies": {
+    "expect.js": "~0.3.1",
+    "mocha": "^5.2.0",
+    "sinon": "1.17.3"
+  }
+}

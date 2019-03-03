@@ -1,0 +1,157 @@
+h1. Keepa API The Keepa API offers numerous endpoints.  Every request requires your API access key as a parameter. You can find and change your key in the keepa portal. All requests must be issued as a HTTPS GET and accept gzip encoding. If possible, use a Keep-Alive connection.  Multiple requests can be made in parallel to increase throughput.
+
+*Version:* 1.0.0
+
+----
+
+{toc:printable=true|style=square|minLevel=2|maxLevel=3|type=list|outline=false|include=.*}
+
+h2. Endpoints
+
+    h3. category
+    {status:colour=Yellow|title=get|subtle=false}
+    {code}
+    get /category
+    {code}
+    *Summary:* Returns Amazon category information from Keepa API.
+    *Description:* Retrieve category objects using their node ids and (optional) their parent tree.
+
+
+    h4. Parameters
+
+
+
+        h5. Query Parameters
+        ||Name||Description||Required||Default||Pattern||
+        |key |Your private API key. |(/) |null |  |
+
+|domain |Integer value for the Amazon locale you want to access. (1-com, 2-co.uk, 3-de, 4-fr, 5-co.jp, 6-ca, 7-cn, 8-it, 9-es, 10-in, 11-com.mx, 12-com.br, 13-com.au) |(/) |null |  |
+
+|category |The category node id of the category you want to request. For batch requests a comma separated list of ids (up to 10, the token cost stays the same). Alternatively you can specify the value 0, which will retrieve a list of all root categories. |(/) |null |  |
+
+|parents |Whether or not to include the category tree for each category. (1 &#x3D; include, 0 &#x3D; do not include.) |(/) |null |  |
+
+
+
+
+
+    h4. Responses
+        *Status Code:* 200
+        *Message:*     search results matching criteria
+        {code:title=Response Type}
+array[category]
+        {code}
+        See [#models]
+
+
+
+        {code:title=Response Schema |collapse=true}
+{
+  "description" : "search results matching criteria",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/category"
+        }
+      }
+    }
+  }
+}
+        {code}
+        *Status Code:* 400
+        *Message:*     bad input parameter
+        {code:title=Response Type}
+
+        {code}
+        See [#models]
+
+
+
+        {code:title=Response Schema |collapse=true}
+{
+  "description" : "bad input parameter"
+}
+        {code}
+    ----
+
+    h3. product
+    {status:colour=Yellow|title=get|subtle=false}
+    {code}
+    get /product
+    {code}
+    *Summary:* Retrieve the product for the specified ASIN and domain.
+    *Description:* Retrieves the product object for the specified ASIN and domain. If our last update is older than one hour it will be automatically refreshed before delivered to you to ensure you get near to real-time pricing data.  You can request products via either their ASIN (preferred) or via UPC and EAN codes. You can not use both parameters, asin and code, in the same request. Keepa can not track Amazon Fresh and eBooks.
+
+
+    h4. Parameters
+
+
+
+        h5. Query Parameters
+        ||Name||Description||Required||Default||Pattern||
+        |key |Your private API key. |(/) |null |  |
+
+|domain |Integer value for the Amazon locale you want to access. (1-com, 2-co.uk, 3-de, 4-fr, 5-co.jp, 6-ca, 7-cn, 8-it, 9-es, 10-in, 11-com.mx, 12-com.br, 13-com.au) |(/) |null |  |
+
+|asin |The ASIN of the product you want to request. For batch requests a comma separated list of ASINs (up to one hundred). |(x) |null |  |
+
+|code |The product code of the product you want to request. We currently allow UPC, EAN and ISBN-13 codes. For batch requests a comma separated list of codes (up to one hundred). Multiple ASINs can have the same product code, so requesting a product code can return multiple products. |(x) |null |  |
+
+
+
+
+
+    h4. Responses
+        *Status Code:* 200
+        *Message:*     search results matching criteria
+        {code:title=Response Type}
+array[category]
+        {code}
+        See [#models]
+
+
+
+        {code:title=Response Schema |collapse=true}
+{
+  "description" : "search results matching criteria",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/category"
+        }
+      }
+    }
+  }
+}
+        {code}
+        *Status Code:* 400
+        *Message:*     bad input parameter
+        {code:title=Response Type}
+
+        {code}
+        See [#models]
+
+
+
+        {code:title=Response Schema |collapse=true}
+{
+  "description" : "bad input parameter"
+}
+        {code}
+    ----
+
+h2. Models
+
+        h3. Category
+        ||Field Name||Required||Type||Description||
+         |domainId | |Integer |Integer value for the Amazon locale you want to access. (1-com, 2-co.uk, 3-de, 4-fr, 5-co.jp, 6-ca, 7-cn, 8-it, 9-es, 10-in, 11-com.mx, 12-com.br, 13-com.au) |
+ |catId | |Integer |The category node id used by Amazon. Represents the identifier of the category. Also part of the Product object’s categories and rootCategory fields. Always a positive Long value. Note - The id 9223372036854775807 (max signed long value) denotes a blank category with the name “?”. We use this in cases where a product is listed in no or non-existent categories. |
+ |name | |String |The name of the category. |
+ |children | |array[Integer] |List of all sub categories. null or [] (empty array) if the category has no sub categories. |
+ |parent | |Integer |The parent category’s Id. Always a positive Long value. If it is 0 the category is a root category and has no parent category. |
+ |highestRank | |Integer |The highest (root category) sales rank we have observed of a product that is listed in this category. Note- Estimate, as the value is from the Keepa product database and not retrieved from Amazon. |
+ |productCount | |Integer |Number of products that are listed in this category. Note- Estimate, as the value is from the Keepa product database and not retrieved from Amazon. |

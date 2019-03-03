@@ -1,0 +1,62 @@
+<div class="main-content">
+  <h2><a name=""></a></h2>
+  <p>This is the  API</p>
+
+  <h2><a name="category"></a>category</h2>
+  <hr>
+  <p></p>
+  <p>Retrieve category objects using their node ids and (optional) their parent tree.</p>
+  <h3 class="section">URL</h3>
+  <code>https://virtserver.swaggerhub.com/magicCashew/keepa/1.0.0/category</code>
+  <h3 class="section">HTTP Method</h3>
+  <code>GET</code>
+  <h3 class="section">Response Type</h3>
+  <div class="model" data-model="category"><a href="">List</a></div>
+  <h3 class="section">Parameters</h3>
+  <ul>
+	  <li class="parameter">
+      
+      <span class="param-in">Query: </span>
+      
+      
+      
+      <span class="param-name">key</span>
+      <span class="param-type">String</span>
+      
+      <p class="param-description">Your private API key.</p>
+	  </li>
+	  <li class="parameter">
+      
+      <span class="param-in">Query: </span>
+      
+      
+      
+      <span class="param-name">domain</span>
+      <span class="param-type">Integer</span>
+      
+      <p class="param-description">Integer value for the Amazon locale you want to access. (1-com, 2-co.uk, 3-de, 4-fr, 5-co.jp, 6-ca, 7-cn, 8-it, 9-es, 10-in, 11-com.mx, 12-com.br, 13-com.au)</p>
+	  </li>
+	  <li class="parameter">
+      
+      <span class="param-in">Query: </span>
+      
+      
+      
+      <span class="param-name">category</span>
+      <span class="param-type">Integer</span>
+      
+      <p class="param-description">The category node id of the category you want to request. For batch requests a comma separated list of ids (up to 10, the token cost stays the same). Alternatively you can specify the value 0, which will retrieve a list of all root categories.</p>
+	  </li>
+	  <li class="parameter">
+      
+      <span class="param-in">Query: </span>
+      
+      
+      
+      <span class="param-name">parents</span>
+      <span class="param-type">Integer</span>
+      
+      <p class="param-description">Whether or not to include the category tree for each category. (1 &#x3D; include, 0 &#x3D; do not include.)</p>
+	  </li>
+  </ul>
+</div>

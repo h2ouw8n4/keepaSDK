@@ -1,0 +1,8 @@
+resolver: lts-12.18
+extra-deps: []
+packages:
+- '.'
+nix:
+  enable: false
+  packages:
+    - zlib
